@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงเวลาทำงาน</title>
+    <style>
+        @font-face {
+            font-family: "AttackOnTitanFont";
+            src: url('https://fonts.cdnfonts.com/s/18842/AttackonTitan.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'AttackOnTitanFont', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://wallpaperaccess.com/full/2584500.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            width: 300px;
+        }
+
+        .time {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        .label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #FFFACD;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #FFD700;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        .button-primary {
+            background-color: #8B0000;
+        }
+
+        .button-secondary {
+            background-color: #4B0082;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .character-image {
+            width: 120px;
+            height: 120px;
+            margin: 10px auto;
+            border-radius: 50%;
+            border: 2px solid #FFD700;
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const timeElement = document.querySelector('.time');
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = (hours % 12 || 12).toString().padStart(2, '0');
+            timeElement.textContent = `${displayHours}:${minutes} ${ampm}`;
+        }
+
+        function submitTime() {
+            const employeeId = document.getElementById('employeeId').value;
+            if (employeeId.trim() === '') {
+                alert('กรุณากรอกรหัสพนักงาน');
+                return;
+            }
+
+            document.querySelector('.input-page').classList.add('hidden');
+            document.querySelector('.summary-page').classList.remove('hidden');
+            document.getElementById('summaryEmployeeId').textContent = employeeId;
+        }
+
+        setInterval(updateTime, 1000);
+        window.onload = updateTime;
+    </script>
+</head>
+<body>
+    <div class="container input-page">
+        <img src="https://upload.wikimedia.org/wikipedia/en/8/8b/Eren_Yeager_AoT.png" alt="Attack on Titan Character" class="character-image">
+        <div class="time">08:15 AM</div>
+        <div class="label">กรอกรหัสพนักงาน</div>
+        <input type="text" id="employeeId" class="input" placeholder="กรอกรหัสของคุณ">
+        <button class="button button-primary" onclick="submitTime()">ลงเวลา</button>
+        <button class="button button-secondary">ย้อนกลับ</button>
+    </div>
+
+    <div class="container summary-page hidden">
+        <img src="https://upload.wikimedia.org/wikipedia/en/8/8b/Eren_Yeager_AoT.png" alt="Attack on Titan Character" class="character-image">
+        <div class="time">08:15 AM</div>
+        <div class="label">ยืนยันการลงเวลา</div>
+        <div id="summaryEmployeeId" class="label" style="font-weight: bold;"></div>
+    </div>
+</body>
+</html>
